@@ -29,8 +29,6 @@ export class HomePage {
     let map = new GoogleMap(element);
 
     map.one(GoogleMapsEvent.MAP_READY).then(() => {
-      console.log("MAP READY");
-
       map.setClickable(false);
       let ionic: GoogleMapsLatLng = new GoogleMapsLatLng(43.0741904,-89.3809802);
       let position: CameraPosition = {
