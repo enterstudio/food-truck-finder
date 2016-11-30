@@ -9,10 +9,14 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { SettingsPage } from '../pages/settings/settings';
+import { NewPage } from '../pages/new/new';
 
 const cloudSettings: CloudSettings = {
   'core': {
     'app_id': 'b8b96647'
+  },
+  'database': {
+    'authType': 'authenticated'
   }
 }
 
@@ -24,7 +28,8 @@ const cloudSettings: CloudSettings = {
     HomePage,
     TabsPage,
     LoginPage,
-    SettingsPage
+    SettingsPage,
+    NewPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -38,7 +43,8 @@ const cloudSettings: CloudSettings = {
     HomePage,
     TabsPage,
     LoginPage,
-    SettingsPage
+    SettingsPage,
+    NewPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
