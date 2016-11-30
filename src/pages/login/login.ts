@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Auth, User, UserDetails, IDetailedError } from '@ionic/cloud-angular';
-import { Platform, NavParams, ViewController } from 'ionic-angular';
+import { Platform, NavParams, ViewController, Events } from 'ionic-angular';
 
 @Component({
   templateUrl: 'login.html'
@@ -16,7 +16,8 @@ export class LoginPage {
     public user: User,
     public platform: Platform,
     public params: NavParams,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public events: Events
   ) {
     console.log("HELLO LOGIN");
   }
@@ -56,6 +57,7 @@ export class LoginPage {
       creds.username = this.username;
     }
     this.auth.login('basic', creds, {'remember': true}).then(() => {
+      this.events.publish('make_clickable');
       this.clearCreds();
       this.dismiss();
     }, (err: IDetailedError<string[]>) => {

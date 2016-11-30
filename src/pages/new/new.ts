@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Database } from '@ionic/cloud-angular';
-import { Platform, NavParams, ViewController } from 'ionic-angular';
+import { Platform, NavParams, ViewController, Events } from 'ionic-angular';
 
 @Component({
   templateUrl: 'new.html'
@@ -13,10 +13,10 @@ export class NewPage {
     public platform: Platform,
     public params: NavParams,
     public viewCtrl: ViewController,
-    public db: Database
+    public db: Database,
+    public events: Events
   ) { 
     this.db.connect();
-    console.log(this.params);
   }
 
   save() {
@@ -26,7 +26,7 @@ export class NewPage {
       name: this.name,
       desc: this.desc
     };
-    this.db.collection('locations').store(location);
+    this.db.collection('locations').store(location).subscribe(console.log, console.error);
     this.clear();
     this.dismiss();
   }
@@ -37,6 +37,7 @@ export class NewPage {
   }
 
   dismiss() {
+    this.events.publish('make_clickable');
     this.viewCtrl.dismiss();
   };
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Auth, Database } from '@ionic/cloud-angular';
-import { NavController, Platform, ModalController } from 'ionic-angular';
+import { NavController, Platform, ModalController, Events } from 'ionic-angular';
 import { 
   GoogleMap, 
   GoogleMapsEvent, 
@@ -23,14 +23,32 @@ export class HomePage {
     public navCtrl: NavController,
     public auth: Auth,
     public db: Database,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public events: Events
   ) {
     this.db.connect();
     this.db.collection('locations').watch().subscribe((locations) => {
-      console.log(locations);
+      locations.forEach((loc) => {
+        let pos: GoogleMapsLatLng = new GoogleMapsLatLng(loc.lat, loc.lng);
+        let markerOptions: GoogleMapsMarkerOptions = {
+          position: pos,
+          title: loc.name,
+          snippet: loc.desc
+        };
+
+        this.map.addMarker(markerOptions);
+      });
     }, (error) => {
       console.error(error);
-    })
+    });
+
+    this.events.subscribe('make_clickable', () => {
+      this.setClickable(true);
+    });
+
+    this.events.subscribe('user:logged_out', () => {
+      this.setClickable(false);
+    });
   }
 
   ngAfterViewInit() {
@@ -44,7 +62,6 @@ export class HomePage {
     this.map = new GoogleMap(element);
 
     this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
-      this.setClickable(false);
       let ionic: GoogleMapsLatLng = new GoogleMapsLatLng(43.0741904,-89.3809802);
       let position: CameraPosition = {
         target: ionic,
@@ -89,7 +106,7 @@ export class HomePage {
   logout() {
     console.log('logging out...');
     this.auth.logout();
-    window.location.reload();
+    this.events.publish('user:logged_out');
   }
 
 }

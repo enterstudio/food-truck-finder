@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Auth } from '@ionic/cloud-angular';
-import { ModalController } from 'ionic-angular';
+import { ModalController, Events } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
 import { AboutPage } from '../about/about';
@@ -17,10 +17,14 @@ export class TabsPage {
   tab2Root: any = AboutPage;
   tab3Root: any = SettingsPage;
 
-  constructor(public modalCtrl: ModalController, public auth: Auth) {
+  constructor(public modalCtrl: ModalController, public auth: Auth, public events: Events) {
     if (!this.auth.isAuthenticated()) {
       this.openLoginModal();
     }
+
+    this.events.subscribe('user:logged_out', () => {
+      this.openLoginModal();
+    })
   };
 
   openLoginModal() {
