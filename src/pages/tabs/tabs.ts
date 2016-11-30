@@ -17,14 +17,14 @@ export class TabsPage {
   tab2Root: any = AboutPage;
   tab3Root: any = ContactPage;
 
-  constructor(public modalCtrl: ModalController, public auth: Auth) { 
+  constructor(public modalCtrl: ModalController, public auth: Auth) {
     if (!this.auth.isAuthenticated()) {
       this.openLoginModal();
     }
-  }
+  };
 
   openLoginModal() {
-    let modal = this.modalCtrl.create(LoginPage);
+    let modal = this.modalCtrl.create(LoginPage, {}, {'enableBackdropDismiss': false});
     modal.present();
-  }
+  };
 }

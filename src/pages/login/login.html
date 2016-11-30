@@ -1,17 +1,44 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Login
-    </ion-title>
-    <ion-buttons start>
-      <button ion-button (click)="dismiss()">
-        <span color="primary" showWhen="ios">Cancel</span>
-        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <h1>YO</h1>
+    <ion-list>
+        <ion-item>
+            <ion-label floating>Username</ion-label>
+            <ion-input type="text" [(ngModel)]="username"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>Email</ion-label>
+            <ion-input type="text" [(ngModel)]="email"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+    </ion-list>
+    <ion-row no-padding>
+        <ion-col>
+            <button ion-button clear small color="danger" icon-left (click)="login()">
+                <ion-icon name='log-in'></ion-icon>
+                Login
+            </button>
+        </ion-col>
+        <ion-col>
+            <button ion-button clear small color="danger" icon-left (click)="signup()">
+                <ion-icon name='log-in'></ion-icon>
+                Signup
+            </button>
+        </ion-col>
+        <ion-col>
+            <button ion-button clear small color="danger" icon-left (click)="log()">
+                <ion-icon name='log-in'></ion-icon>
+                Log
+            </button>
+        </ion-col>
+    </ion-row>
+    <ion-list>
+        <ion-item *ngFor="let error of loginErrors">
+            <ion-icon name='alert'></ion-icon>
+            {{error}}
+        </ion-item>
+    </ion-list>
 </ion-content>
