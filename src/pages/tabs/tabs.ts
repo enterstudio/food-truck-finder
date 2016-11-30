@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Auth } from '@ionic/cloud-angular';
 import { ModalController } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
@@ -16,8 +17,10 @@ export class TabsPage {
   tab2Root: any = AboutPage;
   tab3Root: any = ContactPage;
 
-  constructor(public modalCtrl: ModalController) { 
-    this.openLoginModal();
+  constructor(public modalCtrl: ModalController, public auth: Auth) { 
+    if (!this.auth.isAuthenticated()) {
+      this.openLoginModal();
+    }
   }
 
   openLoginModal() {
