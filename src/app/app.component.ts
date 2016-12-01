@@ -16,11 +16,11 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      StatusBar.styleDefault();
+      Splashscreen.hide();
       if (this.auth.isAuthenticated()) {
         this.events.publish('make_clickable');
       }
-      StatusBar.styleDefault();
-      Splashscreen.hide();
     });
   }
 }
